@@ -12,11 +12,5 @@ public abstract class Shape : MonoBehaviour
 
     public abstract void ActivateObject();
     public abstract void DeactivateObject();
-    public void ColorObject(Color color)
-    { 
 
-    
-    
-    }
-   
 }

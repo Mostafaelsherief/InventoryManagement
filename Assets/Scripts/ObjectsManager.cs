@@ -12,24 +12,21 @@ public class ObjectsManager : MonoBehaviour
      * them later
      */
     public Shape[] shapesToSpawn;
-     List<Shape> spawnedShapes;
+    List<Shape> spawnedShapes;
     int currentObjectIndex;
     Shape currentShape;
+    Color currentColor;
     Item currentItem;
 
     /*
-     
      I Will create a singelton only used to  Aid the SaveData Class as i had no other way of retrieving the 
     shape Data using only Playerprefs, now all i'll do is just access the shape saved in a specific index for 
     it to appear in the menu ,but other than that it has no usage 
-
-     
-     
      */
     public static ObjectsManager instance; 
     void Start()
     {
-       // PlayerPrefs.DeleteAll();
+        //PlayerPrefs.DeleteAll();
         instance = this;
         currentItem = new Item();
         EventHandler.instance.changeColor += ChangeColor;
@@ -43,41 +40,41 @@ public class ObjectsManager : MonoBehaviour
         }
         spawnedShapes[0].GetComponent<Shape>().ActivateObject();
         currentShape = spawnedShapes[0];
+        currentColor = currentShape.Color;
 
     }
     public void ChooseItem(Item item)
     {
         currentShape.DeactivateObject();
-       currentShape= item.Shape;
+        currentShape = spawnedShapes[item.shapeIndex];
         currentShape.ActivateObject();
-        currentShape.Color = item.Color;
-    
+        currentShape.GetComponent<Renderer>().material.color = item.Color;
+        currentColor = item.Color;
     }
     public void ChangeObject()
     {
         currentObjectIndex++;
         if (currentObjectIndex >= spawnedShapes.Count)
             currentObjectIndex = 0;
-        
         currentShape.DeactivateObject();
         currentShape = spawnedShapes[currentObjectIndex];
         currentShape.ActivateObject();
+        currentShape.GetComponent<Renderer>().material.color = currentColor;
     }
 
     public void ChangeColor(Color color)
     {
         Debug.Log("Change Color ");
         currentShape.GetComponent<Renderer>().material.color = color;
-        
+        currentColor = color;
     }
     public void SaveItem()
     {
         Item newItem = new Item();
         newItem.Shape = currentShape;
-        newItem.Color = currentShape.Color;
+        newItem.Color = currentColor;
         newItem.shapeIndex = currentObjectIndex;
         EventHandler.instance.SaveItem(newItem);
-
     }
     
     //badCode

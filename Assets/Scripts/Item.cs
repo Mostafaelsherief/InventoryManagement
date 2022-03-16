@@ -24,14 +24,28 @@ public class Item : MonoBehaviour
         Debug.Log(shape.image.name);
         Debug.Log(shape.image);
         button.image.sprite = shape.image;
+        Debug.Log(color);
+        button.image.color = color;
+        button.onClick.AddListener(ChooseItem);
 
-       
-
-
+    }
+    public void ClearSlot()
+    {
+        shape = null;
+        color = Color.black;
+        shapeIndex = 0;
+        button.image.sprite = null;
+        button.image.color = Color.white;
     }
     public void ChooseItem()
     {
-        EventHandler.instance.ChooseItem(this);
+        if (shape != null)
+        {
 
+            Debug.Log("inside Choose Item");
+            Debug.Log(shape.name);
+            Debug.Log(color);
+            EventHandler.instance.ChooseItem(this);
+        }
     }
 }

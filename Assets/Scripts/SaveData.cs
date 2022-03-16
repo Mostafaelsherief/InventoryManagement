@@ -10,7 +10,7 @@ public class SaveData : MonoBehaviour
      
      */
     public static SaveData instance;
-    private void Start()
+    private void Awake()
     {
         instance = this;
     }
@@ -35,18 +35,14 @@ public class SaveData : MonoBehaviour
             newColor.r = r;
             newColor.g = g;
             newColor.b = B;
+            newColor.a = 1;
             newITem.Color = newColor;
-            
+        
             //Bad code 
             newITem.Shape = ObjectsManager.instance.GetShapeinIndex(newITem.shapeIndex);
             Debug.Log(newITem.Shape.name);
             listOfItems.Add(newITem);
         }
-
-
-
-
-
         return listOfItems;
     
     }
